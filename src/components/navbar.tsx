@@ -4,41 +4,17 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
+import useCart from "../hooks/useCart";
 import Theme from "./Theme";
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
   const Router = useRouter();
+  const { cartCount } = useCart();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await fetch("/api/cart");
-        const data = await response.json();
-        // console.log("API Response:", data); // Debugging line
-
-        if (response.ok && data.cartItems) {
-          // Calculate total items in cart
-          let totalCount = 0;
-          data.cartItems.forEach((item: any) => {
-            totalCount += item.quantity;
-          });
-          setCartCount(totalCount);
-        } else {
-          console.error("Failed to fetch cart items:", data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-      }
-    };
-
-    fetchCartItems();
-  }, []);
 
   return (
     <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[16pt]">

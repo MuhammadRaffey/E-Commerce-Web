@@ -41,7 +41,11 @@ const Home = async () => {
 
   return (
     <div className="flex flex-row justify-center items-center m-7 text-2xl">
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          className: "bg-black text-white",
+        }}
+      />
       {data.map((item) => (
         <Card
           className="flex transition-all duration-100 hover:drop-shadow-primary drop-shadow-md hover:shadow-primary justify-center flex-col w-max items-center m-2 gap-3 cursor-pointer"

@@ -1,6 +1,9 @@
 "use client";
+// src/components/CardComponent.tsx
 import React from "react";
 import { CardFooter } from "@/components/ui/card";
+import useCart from "../hooks/useCart";
+import { toast } from "react-hot-toast";
 
 interface CardComponentProps {
   item: {
@@ -12,12 +15,14 @@ interface CardComponentProps {
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({ item }) => {
+  const { fetchCartItems } = useCart();
+
   const handleAddToCart = async (id: string) => {
     try {
       const data = {
         product_id: id,
       };
-      const res = await fetch("/api/cart", {
+      const response = await fetch("/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -25,21 +30,19 @@ const CardComponent: React.FC<CardComponentProps> = ({ item }) => {
         body: JSON.stringify(data),
       });
 
-      if (res.ok) {
-        const result = await res.json();
-        console.log("Cart updated:", result);
+      if (response.ok) {
+        await fetchCartItems(); // Update cart count after adding to cart
+        toast.success("Item added to cart", { icon: "✨" });
       } else {
-        console.error("Failed to add to cart:", res.statusText);
+        console.error("Failed to add item to cart:", response.statusText);
       }
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      // toast("Items Added To Cart", { icon: "✨" });
+      console.error("Error adding item to cart:", error);
     }
   };
 
   return (
     <CardFooter>
-      {/* <Toaster position="bottom-right" /> */}
       <p>{item.category.name}</p>
       <button
         className="btn btn-primary transition-all duration-200 hover:scale-105 hover:btn-primary btn-outline btn-md rounded-lg"

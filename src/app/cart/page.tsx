@@ -12,6 +12,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card";
+import { toast } from "react-hot-toast";
 
 interface CartItem {
   id: number;
@@ -31,7 +32,7 @@ const CartPage = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await fetch("/api/cart");
+        const response = await fetch("/api/cart", { cache: "no-cache" });
         const data = await response.json();
         // console.log("API Response:", data); // Debugging line
 
