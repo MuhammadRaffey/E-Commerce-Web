@@ -98,7 +98,6 @@ export const POST = async (request: Request) => {
         )
         .returning();
     } else {
-      // If it does not exist, insert a new entry
       res = await db
         .insert(cartTable)
         .values({
