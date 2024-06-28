@@ -1,13 +1,10 @@
 "use client";
 // src/components/NavBar.tsx
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import { FiHome, FiImage, FiShoppingCart } from "react-icons/fi";
+import { FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import Theme from "./Theme";
-import Cookies from "js-cookie";
-import { fetchCartItems, addToCart } from "@/lib/cart"; // Assuming addToCart function exists
 
 const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +15,34 @@ const NavBar: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const response = await fetch("/api/cart");
+        const data = await response.json();
+        // console.log("API Response:", data); // Debugging line
+
+        if (response.ok && data.cartItems) {
+          // Calculate total items in cart
+          let totalCount = 0;
+          data.cartItems.forEach((item: any) => {
+            totalCount += item.quantity;
+          });
+          setCartCount(totalCount);
+        } else {
+          console.error("Failed to fetch cart items:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    fetchCartItems();
+  }, []);
+
   return (
-    <nav className="w-full transition-all duration-300 border-b hover:shadow-sm  hover:shadow-primary hover:border-primary border-b-slate-600 text-[16pt]">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto ">
+    <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[16pt]">
+      <div className="flex flex-wrap items-center justify-between mx-auto">
         <div className="flex flex-row items-center">
           <FiShoppingCart className="w-12 text-primary h-12 mt-3 mx-5 gap-2" />
           <span className="text-3xl font-bold whitespace-nowrap mt-3">
@@ -83,7 +105,7 @@ const NavBar: React.FC = () => {
             <li>
               <Link
                 href="/"
-                className="flex items-center  py-2 hover:underline underline-offset-4 px-3 rounded"
+                className="flex items-center py-2 hover:underline underline-offset-4 px-3 rounded"
                 aria-current="page"
               >
                 Home

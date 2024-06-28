@@ -1,8 +1,10 @@
 import { client } from "@/lib/sanityClient";
 
-export const fetchCartItems = async (user_id: string) => {
+export const fetchCartItems = async () => {
   try {
-    const response = await fetch(`/api/cart?user_id=${user_id}`);
+    const response = await fetch(`/api/cart`);
+    console.log("🚀 ~ fetchCartItems ~ response:", response);
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }

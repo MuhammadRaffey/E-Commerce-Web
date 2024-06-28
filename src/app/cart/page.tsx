@@ -96,7 +96,7 @@ const CartPage = () => {
                   alt="product"
                   width={180}
                   height={180}
-                  className="rounded-lg"
+                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
                 />
                 <p className="mt-4 text-center font-bold">
                   Price: ${item.price}

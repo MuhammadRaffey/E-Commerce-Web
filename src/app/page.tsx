@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import CardComponent from "@/components/Card";
-import { addToCart } from "@/lib/cart";
 import { Toaster } from "react-hot-toast";
 
 interface ProductType {
