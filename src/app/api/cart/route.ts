@@ -12,6 +12,7 @@ export const GET = async (request: NextRequest) => {
   const req = request.nextUrl;
   const uid =
     req.searchParams.get("user_id") || cookies().get("user_id")?.value;
+  console.log("🚀 ~ GET ~ uid:", uid);
 
   try {
     // Fetch cart items from PostgreSQL
