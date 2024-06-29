@@ -17,13 +17,14 @@ interface ProductType {
   title: string;
   _id: string;
   description: string;
-  image: iImg;
+  image: iImg[] | iImg;
   price: number;
   category: { name: string };
 }
 
 const fetchProductData = async (): Promise<ProductType[]> => {
-  const res = await client.fetch(`*[_type == "product"]{
+  const res = await client.fetch(
+    `*[_type == "product"]{
     _id,
     title,
     image,
@@ -32,7 +33,10 @@ const fetchProductData = async (): Promise<ProductType[]> => {
     category -> {
       category
     }
-  }`);
+  }`
+  );
+  // console.log("🚀 ~ fetchProductData ~ res:", res);
+
   return res;
 };
 
@@ -40,7 +44,7 @@ const Home = async () => {
   const data = await fetchProductData();
 
   return (
-    <div className="flex flex-row justify-center items-center m-7 text-2xl">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-center items-center m-7 mr-2 pl-5 sm:pl-0">
       <Toaster
         toastOptions={{
           className: "bg-black text-white",
@@ -52,21 +56,34 @@ const Home = async () => {
           key={item._id}
         >
           <CardHeader>
-            <CardTitle className="font-bold text-primary font-sans normal-case text-4xl tracking-wide">
+            <CardTitle className="font-bold text-primary font-sans normal-case text-2xl sm:text-4xl tracking-wide ">
               {item.title}
             </CardTitle>
-            <CardDescription className="font-mono font-bold mt-3 -mb-3 tracking-wide">
+            {/* <CardDescription className="font-mono font-bold mt-3 -mb-3 tracking-wide">
               {item.description}
-            </CardDescription>
+            </CardDescription> */}
           </CardHeader>
           <CardContent>
-            <Image
-              src={urlForImage(item.image)}
-              alt="product"
-              width={180}
-              height={180}
-              className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
-            />
+            {Array.isArray(item.image) ? (
+              item.image.map((img, index) => (
+                <Image
+                  key={index}
+                  src={urlForImage(img)}
+                  alt={`product-${index}`}
+                  width={180}
+                  height={200}
+                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
+                />
+              ))
+            ) : (
+              <Image
+                src={urlForImage(item.image)}
+                alt="product"
+                width={180}
+                height={200}
+                className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
+              />
+            )}
             <p className="text-center text-pretty font-bold text-4xl -mb-6 mt-4">
               ${item.price}
             </p>

@@ -1,6 +1,6 @@
 "use client";
 // src/components/NavBar.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
@@ -19,17 +19,17 @@ const NavBar: React.FC = () => {
   return (
     <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[16pt]">
       <div className="flex flex-wrap items-center justify-between mx-auto">
-        <div className="flex flex-row items-center">
-          <FiShoppingCart className="w-12 text-primary h-12 mt-3 mx-5 gap-2" />
+        <div className="flex flex-row items-center ">
+          <FiShoppingCart className="w-12 text-primary h-12 mt-4 mx-5 gap-2" />
           <span className="text-3xl font-bold whitespace-nowrap mt-3">
             E-ComStore
           </span>
         </div>
-        <div className="flex md:order-2 items-center flex-shrink-0">
+        <div className="flex md:order-2 items-center w-full md:w-auto">
           <input
             type="text"
             placeholder="Search..."
-            className="px-4 py-1 mt-3 rounded-lg bg-gray-300 text-black"
+            className="flex flex-shrink md:flex-shrink-0 w-full md:w-auto px-4 py-1 mt-3 rounded-lg bg-gray-300 text-black ml-3 sm:ml-0"
           />
           <div
             className="relative cursor-pointer"
@@ -49,13 +49,13 @@ const NavBar: React.FC = () => {
           <button
             onClick={toggleMenu}
             type="button"
-            className="inline-flex items-center p-2 w-9 h-9 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 mt-0 sm:mt-4"
+            className="inline-flex items-center p-2 w-9 h-9 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 mt-0 sm:mt-6"
             aria-controls="navbar-sticky"
             aria-expanded={isOpen}
           >
             <span className="sr-only">Open main menu</span>
             <svg
-              className="w-5 text-primary h-5"
+              className="w-5 text-primary h-5 mt-2 sm:mt-0"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

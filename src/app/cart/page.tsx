@@ -33,6 +33,7 @@ const CartPage = () => {
     const fetchCartItems = async () => {
       try {
         const response = await fetch("/api/cart", { cache: "no-cache" });
+        //
         const data = await response.json();
         // console.log("API Response:", data); // Debugging line
 
@@ -77,7 +78,7 @@ const CartPage = () => {
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <div className="grid grid-cols-2  gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-center items-center m-7 mr-2 pl-3 sm:pl-0">
           {cartItems.map((item) => (
             <Card
               key={item.id}
