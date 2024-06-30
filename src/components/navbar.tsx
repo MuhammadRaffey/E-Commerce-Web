@@ -6,8 +6,11 @@ import { FiShoppingCart } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import useCart from "../hooks/useCart";
 import Theme from "./Theme";
+import { usePathname } from "next/navigation";
 
 const NavBar: React.FC = () => {
+  const pathname = usePathname();
+  const isSanityStudio = pathname.startsWith("/studio");
   const [isOpen, setIsOpen] = useState(false);
   const Router = useRouter();
   const { cartCount } = useCart();
@@ -15,7 +18,9 @@ const NavBar: React.FC = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
+  if (isSanityStudio) {
+    return <div></div>;
+  }
   return (
     <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[16pt]">
       <div className="flex flex-wrap items-center justify-between mx-auto">

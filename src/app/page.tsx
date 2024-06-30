@@ -3,6 +3,7 @@ import Image from "next/image";
 import { client } from "@/lib/sanityClient";
 import { Image as iImg } from "sanity";
 import { urlForImage } from "../../sanity/lib/image";
+import { unstable_noStore as noStore } from "next/cache";
 import {
   Card,
   CardContent,
@@ -23,6 +24,7 @@ interface ProductType {
 }
 
 const fetchProductData = async (): Promise<ProductType[]> => {
+  noStore();
   const res = await client.fetch(
     `*[_type == "product"]{
     _id,
