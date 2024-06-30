@@ -14,6 +14,7 @@ const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const Router = useRouter();
   const { cartCount } = useCart();
+  console.log("🚀 ~ cartCount:", cartCount);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
