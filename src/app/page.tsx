@@ -44,7 +44,7 @@ const Home = async () => {
   const data = await fetchProductData();
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-center items-center m-7 mr-2 pl-5 sm:pl-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center m-7 mr-2 pl-5 sm:pl-0">
       <Toaster
         toastOptions={{
           className: "bg-black text-white",
