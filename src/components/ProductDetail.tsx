@@ -7,6 +7,7 @@ import Image from "next/image";
 import { ChevronLeftIcon, ShoppingCartIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import useCart from "@/hooks/useCart";
 
 interface ProductType {
@@ -20,7 +21,7 @@ interface ProductType {
 
 const ProductDetail = ({ product }: { product: ProductType }) => {
   const router = useRouter();
-  const { fetchCartItems } = useCart(); // Destructure the addToCart function from the cart context
+  const { fetchCartItems } = useCart();
 
   const handleAddToCart = async (id: string) => {
     try {
@@ -29,17 +30,17 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
       };
       const response = await fetch("/api/cart", {
         method: "POST",
+        cache: "no-store",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
+      // toast.success("Item added to cart", { icon: "✨" });
 
       if (response.ok) {
-        const cartItems = await fetchCartItems();
-        console.log("🚀 ~ handleAddToCart ~ cartItems:", cartItems);
-
         toast.success("Item added to cart", { icon: "✨" });
+        const cartItems = await fetchCartItems();
       } else {
         console.error("Failed to add item to cart:", response.statusText);
         toast.error("Failed to add item to cart");
@@ -52,6 +53,11 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
 
   return (
     <div className="container mx-auto p-6 bg-base-100 rounded-lg shadow-lg">
+      <Toaster
+        toastOptions={{
+          className: "bg-black text-white",
+        }}
+      />
       <button
         onClick={() => router.back()}
         className="flex items-center text-primary hover:text-secondary transition duration-150 ease-in-out mb-4"

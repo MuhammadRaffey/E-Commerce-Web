@@ -8,7 +8,7 @@ const useCart = () => {
       const response = await fetch("/api/cart", { cache: "no-cache" });
       const data = await response.json();
 
-      console.log("🚀 ~ fetchCartItems ~ response data:", data);
+      // console.log("🚀 ~ fetchCartItems ~ response data:", data);
 
       if (response.ok && data.cartItems) {
         let totalCount = 0;

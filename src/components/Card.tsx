@@ -3,7 +3,7 @@ import React from "react";
 import { CardFooter } from "@/components/ui/card";
 import useCart from "../hooks/useCart";
 import { toast } from "react-hot-toast";
-import Link from "next/link"; // Import Link from next/link
+import Link from "next/link";
 
 interface CardComponentProps {
   item: {
@@ -32,7 +32,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ item }) => {
 
       if (response.ok) {
         const cartItems = await fetchCartItems();
-        console.log("🚀 ~ handleAddToCart ~ cartItems:", cartItems);
+        // console.log("🚀 ~ handleAddToCart ~ cartItems:", cartItems);
 
         toast.success("Item added to cart", { icon: "✨" });
       } else {
@@ -54,7 +54,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ item }) => {
       >
         Add to Cart
       </button>
-      {/* Use Link properly */}
+
       <Link href={`/products/${item._id}`}>
         <button className="btn btn-secondary transition-all duration-200 hover:scale-105 hover:btn-secondary btn-outline btn-md rounded-lg">
           Details

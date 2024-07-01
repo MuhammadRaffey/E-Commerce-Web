@@ -1,7 +1,5 @@
-// app/page.tsx
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { client } from "@/lib/sanityClient";
 import { Image as iImg } from "sanity";
 import { urlForImage } from "../../sanity/lib/image";
