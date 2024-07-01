@@ -17,27 +17,69 @@ interface ProductType {
 const fetchProductData = async (): Promise<ProductType[]> => {
   noStore();
   const res = await client.fetch(
-    `*[_type == "product"]{
+    `*[_type == "product" && category->category == "men"]{
       _id,
       title,
       image,
       description,
       price,
-      category -> {
-        name
+      category->{
+        category
       }
-    }`
+    }
+    `
+  );
+  return res;
+};
+const fetchProductData1 = async (): Promise<ProductType[]> => {
+  noStore();
+  const res = await client.fetch(
+    `*[_type == "product" && category->category == "women"]{
+      _id,
+      title,
+      image,
+      description,
+      price,
+      category->{
+        category
+      }
+    }
+    `
+  );
+  return res;
+};
+const fetchProductData2 = async (): Promise<ProductType[]> => {
+  noStore();
+  const res = await client.fetch(
+    `*[_type == "product" && category->category == "children"]{
+      _id,
+      title,
+      image,
+      description,
+      price,
+      category->{
+        category
+      }
+    }
+    `
   );
   return res;
 };
 
 const Home = async () => {
-  const products = await fetchProductData();
+  const men = await fetchProductData();
+  const women = await fetchProductData1();
+  const children = await fetchProductData2();
 
   return (
     <>
       <Toaster toastOptions={{ className: "bg-black text-white" }} />
-      <CardComponent products={products} />
+      <h1 className="text-center text-4xl font-bold text-primary pt-3">Men</h1>
+      <CardComponent products={men} />
+      <h1 className="text-center text-4xl font-bold text-primary">Women</h1>
+      <CardComponent products={women} />
+      <h1 className="text-center text-4xl font-bold text-primary">Children</h1>
+      <CardComponent products={children} />
     </>
   );
 };

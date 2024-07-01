@@ -81,16 +81,13 @@ const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
             </CardHeader>
             <CardContent>
               {Array.isArray(item.image) ? (
-                item.image.map((img, index) => (
-                  <Image
-                    key={index}
-                    src={urlForImage(img)}
-                    alt={`product-${index}`}
-                    width={200}
-                    height={200}
-                    className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
-                  />
-                ))
+                <Image
+                  src={urlForImage(item.image[0])}
+                  alt="product"
+                  width={200}
+                  height={200}
+                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
+                />
               ) : (
                 <Image
                   src={urlForImage(item.image)}
