@@ -2,7 +2,6 @@
 import React from "react";
 import { client } from "@/lib/sanityClient";
 import { Image as iImg } from "sanity";
-import { urlForImage } from "../../../../sanity/lib/image";
 import ProductDetail from "@/components/ProductDetail";
 
 interface ProductType {

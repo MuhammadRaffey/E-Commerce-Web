@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 import useCart from "../hooks/useCart";
 import { Image as iImg } from "sanity";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
 interface ProductType {
   title: string;
@@ -59,20 +60,20 @@ const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
   return (
     <div className="relative">
       <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full z-10"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-inherit text-primary font-bold p-2 rounded-full z-10"
         onClick={() => {
           document
             .getElementById("product-list")
             ?.scrollBy({ left: -300, behavior: "smooth" });
         }}
       >
-        {"<"}
+        <ChevronLeft />
       </button>
-      <div id="product-list" className="flex overflow-x-auto space-x-10  p-4">
+      <div id="product-list" className="flex overflow-x-auto space-x-10 p-4">
         {products.map((item) => (
           <Card
             key={item._id}
-            className="flex transition-all duration-100 hover:drop-shadow-primary drop-shadow-md hover:shadow-primary justify-center flex-col  items-center m-8 px-8 pr-12 gap-3 cursor-pointer"
+            className="flex transition-all duration-100 hover:drop-shadow-primary drop-shadow-md hover:shadow-primary justify-center flex-col items-center m-8 px-8 pr-12 gap-3 cursor-pointer"
           >
             <CardHeader>
               <CardTitle className="font-bold text-primary font-sans normal-case text-2xl sm:text-4xl inline-block truncate overflow-hidden whitespace-nowrap">
@@ -86,7 +87,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
                   alt="product"
                   width={200}
                   height={200}
-                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
+                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square "
                 />
               ) : (
                 <Image
@@ -94,7 +95,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
                   alt="product"
                   width={200}
                   height={200}
-                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
+                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square "
                 />
               )}
               <p className="text-center text-pretty font-bold text-4xl -mb-6 mt-4">
@@ -119,14 +120,14 @@ const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
         ))}
       </div>
       <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full z-10"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-inherit text-primary font-bold p-2 rounded-full z-10"
         onClick={() => {
           document
             .getElementById("product-list")
             ?.scrollBy({ left: 300, behavior: "smooth" });
         }}
       >
-        {">"}
+        <ChevronRight />
       </button>
     </div>
   );

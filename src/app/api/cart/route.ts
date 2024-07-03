@@ -25,13 +25,13 @@ export const GET = async (request: NextRequest) => {
     // Fetch product details from Sanity
     const query = groq`
       *[_type == "product"]{
-    _id,
-    title,
-    description,
-    price,
-    image,
-    "category": category->category
-  }
+        _id,
+        title,
+        description,
+        price,
+        image,
+        "category": category->category
+      }
     `;
 
     const params = { uid };
@@ -90,7 +90,7 @@ export const POST = async (request: Request) => {
       // If it exists, update the quantity
       res = await db
         .update(cartTable)
-        .set({ quantity: existingItem.quantity + 1 })
+        .set({ quantity: existingItem.quantity + req.quantity })
         .where(
           and(
             eq(cartTable.user_id, user_id),
@@ -103,7 +103,7 @@ export const POST = async (request: Request) => {
         .insert(cartTable)
         .values({
           product_id: req.product_id,
-          quantity: 1,
+          quantity: req.quantity || 1,
           user_id: user_id,
         })
         .returning();
