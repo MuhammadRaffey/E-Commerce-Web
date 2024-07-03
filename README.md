@@ -1,6 +1,6 @@
 # E-com Store
 
-![E-com Store](./path/to/your/screenshot.png)
+![E-com Store](./public/Main%20Page.png)
 
 E-com Store is a modern e-commerce website built with Next.js and Sanity.io. The website is designed to provide a seamless shopping experience, featuring various categories for different demographics.
 
