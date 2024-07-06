@@ -14,7 +14,6 @@ const NavBar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const Router = useRouter();
   const { cartCount } = useCart();
-  // console.log("🚀 ~ cartCount:", cartCount);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -35,7 +34,7 @@ const NavBar: React.FC = () => {
           <input
             type="text"
             placeholder="Search..."
-            className="flex flex-shrink md:flex-shrink-0 w-40 md:w-auto px-4 py-1 mt-3 rounded-lg bg-gray-300 text-black ml-3 sm:ml-0 "
+            className="flex flex-grow md:flex-grow-0 w-48 md:w-auto px-4 py-1 mt-3 rounded-lg bg-gray-300 text-black ml-3 sm:ml-0 "
           />
           <div
             className="relative cursor-pointer"
