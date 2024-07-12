@@ -9,10 +9,8 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardFooter,
   CardTitle,
 } from "@/components/ui/card";
-import { toast } from "react-hot-toast";
 
 interface CartItem {
   id: number;
