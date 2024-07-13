@@ -12,7 +12,13 @@ export const GET = async (request: NextRequest) => {
   const req = request.nextUrl;
   const uid =
     req.searchParams.get("user_id") || cookies().get("user_id")?.value;
-  // console.log("🚀 ~ GET ~ uid:", uid);
+
+  if (!uid) {
+    return NextResponse.json(
+      { message: "User ID is missing" },
+      { status: 400 }
+    );
+  }
 
   try {
     // Fetch cart items from PostgreSQL
@@ -20,7 +26,6 @@ export const GET = async (request: NextRequest) => {
       .select()
       .from(cartTable)
       .where(eq(cartTable.user_id, uid as string));
-    // console.log("🚀 ~ GET ~ cartItems:", cartItems);
 
     // Fetch product details from Sanity
     const query = groq`
@@ -36,16 +41,13 @@ export const GET = async (request: NextRequest) => {
 
     const params = { uid };
 
-    // console.log("🚀 ~ GET ~ params:", params);
     const sanityProducts = await client.fetch(query, params);
-    // console.log("🚀 ~ GET ~ sanityProducts:", sanityProducts);
 
     // Combine cart items with product details
     const combinedItems = cartItems.map((cartItem) => {
       const matchingProduct = sanityProducts.find(
         (product: any) => product._id === cartItem.product_id
       );
-      // console.log("🚀 ~ GET ~ combinedItems:", combinedItems);
 
       return {
         id: cartItem.id,
