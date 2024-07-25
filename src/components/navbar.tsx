@@ -22,26 +22,26 @@ const NavBar: React.FC = () => {
     return <div></div>;
   }
   return (
-    <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[16pt]">
+    <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[15pt] overflow-x-hidden px-4">
       <div className="flex flex-wrap items-center justify-between mx-auto">
         <div className="flex flex-row items-center ">
-          <FiShoppingCart className="w-12 text-primary h-12 mt-4 mx-5 gap-2" />
-          <span className="text-3xl font-bold whitespace-nowrap mt-3">
+          <FiShoppingCart className="w-8 text-primary  h-8 mt-4 mx-5 gap-2" />
+          <span className="text-[16pt] font-bold whitespace-nowrap mt-4">
             E-ComStore
           </span>
         </div>
         <div className="flex md:order-2 items-center w-full md:w-auto">
           <input
             type="text"
-            placeholder="Search..."
-            className="flex flex-grow md:flex-grow-0 w-48 md:w-auto px-4 py-1 mt-3 rounded-lg bg-gray-300 text-black ml-3 sm:ml-0 "
+            placeholder="Type here"
+            className="input input-bordered input-info w-full max-w-xs mr-2 h-10 mt-3"
           />
           <div
             className="relative cursor-pointer"
             onClick={() => Router.push("/cart")}
           >
             <div className="flex items-center">
-              <FiShoppingCart className="w-6 h-6 mt-3 mx-4 gap-3" />
+              <FiShoppingCart className="w-6 h-6 mt-3 mx-4 gap-3 " />
               {cartCount > 0 && (
                 <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
                   {cartCount}

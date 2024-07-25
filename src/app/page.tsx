@@ -1,9 +1,10 @@
 import React from "react";
 import { client } from "@/lib/sanityClient";
 import { unstable_noStore as noStore } from "next/cache";
-import CardComponent from "@/components/Card";
 import { Toaster } from "react-hot-toast";
 import { Image as iImg } from "sanity";
+import Footer from "../components/Footer";
+import Home from "../components/Home";
 
 interface ProductType {
   title: string;
@@ -66,22 +67,23 @@ const fetchProductData2 = async (): Promise<ProductType[]> => {
   return res;
 };
 
-const Home = async () => {
-  const men = await fetchProductData();
-  const women = await fetchProductData1();
-  const children = await fetchProductData2();
+const Main = async () => {
+  // const men = await fetchProductData();
+  // const women = await fetchProductData1();
+  // const children = await fetchProductData2();
 
   return (
     <>
-      <Toaster toastOptions={{ className: "bg-black text-white" }} />
-      <h1 className="text-center text-4xl font-bold text-primary pt-3">Men</h1>
-      <CardComponent products={men} />
-      <h1 className="text-center text-4xl font-bold text-primary">Women</h1>
-      <CardComponent products={women} />
-      <h1 className="text-center text-4xl font-bold text-primary">Children</h1>
-      <CardComponent products={children} />
+      <Toaster
+        toastOptions={{
+          className: "",
+          style: { backgroundColor: "black", color: "white" },
+        }}
+      />
+      <Home />
+      <Footer />
     </>
   );
 };
 
-export default Home;
+export default Main;
