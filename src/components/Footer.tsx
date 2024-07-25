@@ -9,31 +9,37 @@ const Footer = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="overflow-x-hidden "
+      className="overflow-x-hidden"
     >
-      <footer className="footer  text-base-content p-10 ">
-        <nav>
+      <footer className="footer text-base-content p-10 grid grid-cols-2 gap-8 md:grid-cols-3">
+        <div>
           <h6 className="footer-title">Services</h6>
           <a className="link link-hover">Branding</a>
           <a className="link link-hover">Design</a>
           <a className="link link-hover">Marketing</a>
           <a className="link link-hover">Advertisement</a>
-        </nav>
-        <nav>
+        </div>
+        <div>
           <h6 className="footer-title">Company</h6>
           <a className="link link-hover">About us</a>
           <a className="link link-hover">Contact</a>
           <a className="link link-hover">Jobs</a>
           <a className="link link-hover">Press kit</a>
-        </nav>
-        <nav>
+        </div>
+        <div>
           <h6 className="footer-title">Social</h6>
-          <div className="grid grid-flow-col gap-4 text-2xl">
-            <FiGithub />
-            <FiInstagram />
-            <FiTwitter />
+          <div className="flex gap-4 text-2xl">
+            <a href="#" className="link link-hover">
+              <FiGithub />
+            </a>
+            <a href="#" className="link link-hover">
+              <FiInstagram />
+            </a>
+            <a href="#" className="link link-hover">
+              <FiTwitter />
+            </a>
           </div>
-        </nav>
+        </div>
       </footer>
     </motion.div>
   );

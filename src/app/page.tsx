@@ -3,7 +3,6 @@ import { client } from "@/lib/sanityClient";
 import { unstable_noStore as noStore } from "next/cache";
 import { Toaster } from "react-hot-toast";
 import { Image as iImg } from "sanity";
-import Footer from "../components/Footer";
 import Home from "../components/Home";
 
 interface ProductType {
@@ -81,7 +80,6 @@ const Main = async () => {
         }}
       />
       <Home />
-      <Footer />
     </>
   );
 };
