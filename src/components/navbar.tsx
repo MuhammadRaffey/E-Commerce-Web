@@ -22,10 +22,10 @@ const NavBar: React.FC = () => {
     return <div></div>;
   }
   return (
-    <nav className="transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[15pt] overflow-x-hidden px-4">
+    <nav className="sticky top-0 z-50 transition-all duration-300 border-b hover:shadow-sm hover:shadow-primary hover:border-primary border-b-slate-600 text-[15pt] px-4 bg-base-100">
       <div className="flex flex-wrap items-center justify-between mx-auto">
-        <div className="flex flex-row items-center ">
-          <FiShoppingCart className="w-8 text-primary  h-8 mt-4 mx-5 gap-2" />
+        <div className="flex flex-row items-center">
+          <FiShoppingCart className="w-8 text-primary h-8 mt-4 mx-5" />
           <span className="text-[16pt] font-bold whitespace-nowrap mt-4">
             E-ComStore
           </span>
@@ -41,7 +41,7 @@ const NavBar: React.FC = () => {
             onClick={() => Router.push("/cart")}
           >
             <div className="flex items-center">
-              <FiShoppingCart className="w-6 h-6 mt-3 mx-4 gap-3 " />
+              <FiShoppingCart className="w-6 h-6 mt-3 mx-4" />
               {cartCount > 0 && (
                 <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
                   {cartCount}
