@@ -22,7 +22,7 @@ const Home = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="grid place-content-center mb-12 flex-grow w-full"
+          className="grid place-content-center mb-12 flex-grow w-full px-5"
         >
           <Image src="/img.jpg" width={700} height={100} alt="logo" className="max-w-full h-auto" />
         </motion.div>
