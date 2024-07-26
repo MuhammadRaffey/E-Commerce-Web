@@ -7,7 +7,7 @@ const Theme = () => {
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
-      isDarkMode ? "night" : "light"
+      isDarkMode ? "black" : "lofi"
     );
   }, [isDarkMode]);
 

@@ -2,43 +2,43 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import Footer from "./Footer";
 
 const Home = () => {
   return (
-    <motion.div
-      initial="offscreen"
-      whileInView="onscreen"
-      viewport={{ once: true, amount: 0.8 }}
-      className="w-full h-screen overflow-x-hidden flex items-center justify-center"
-    >
-      <div className="grid py-12 px-4 md:px-12 lg:px-24 h-screen grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
-        <div className="h-32 rounded-lg">
-          <motion.h1
-            animate={{ x: 20 }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="font-[Outfit] ml-2 md:ml-6 shadowed font-bold tracking-tight text-[40pt] md:text-[50pt] lg:text-[70pt] text-pretty leading-none"
-          >
-            An Industrial Twist on Streetwear.
-          </motion.h1>
-        </div>
-        <motion.div
-          animate={{ x: -20 }}
-          initial={{ opacity: 0 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
-          whileInView={{ opacity: 1 }}
-          className="h-32 rounded-full relative flex items-center justify-center mt-16 lg:mt-0 "
+    <>
+      <div className="flex flex-col items-center min-h-screen overflow-x-hidden">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-6xl md:text-6xl lg:text-8xl leading-none text-center p-8 md:p-14 tracking-normal font-thin italic font-[SourceSerif4] duration-100 transition-all selection:text-secondary"
         >
-          <Image
-            className="rounded-full hover:scale-105 transition-all duration-300 hover:shadow-primary lg:mt-60 bg-success "
-            src="/img.png"
-            width={300}
-            height={300}
-            alt="logo"
-          />
+          An Industrial Twist <br />on Streetwear.
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="grid place-content-center mb-12 flex-grow w-full"
+        >
+          <Image src="/img.jpg" width={700} height={100} alt="logo" className="max-w-full h-auto" />
         </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1 }}
+        >
+          <Link className="text-primary" href="/all-products">
+            <Button>Start Shopping</Button>
+          </Link>
+        </motion.div>
+        <hr className="w-full top-0 left-0 mt-8 z-50" />
       </div>
-    </motion.div>
+      {/* <Footer /> */}
+    </>
   );
 };
 

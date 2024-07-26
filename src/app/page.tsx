@@ -4,6 +4,9 @@ import { unstable_noStore as noStore } from "next/cache";
 import { Toaster } from "react-hot-toast";
 import { Image as iImg } from "sanity";
 import Home from "../components/Home";
+import NavBar from "@/components/navbar";
+import Footer from "@/components/Footer";
+
 
 interface ProductType {
   title: string;
@@ -79,6 +82,7 @@ const Main = async () => {
           style: { backgroundColor: "black", color: "white" },
         }}
       />
+
       <Home />
     </>
   );
