@@ -37,7 +37,6 @@ const Home = () => {
         </motion.div>
         <hr className="w-full top-0 left-0 mt-8 z-50" />
       </div>
-      {/* <Footer /> */}
     </>
   );
 };
