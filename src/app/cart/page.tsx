@@ -2,17 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Image as Iimg } from "sanity";
-import Image from "next/image";
 import { urlForImage } from "../../../sanity/lib/image";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import CartItem from "@/components/Cart";
 
-interface CartItem {
+interface CartItemData {
   id: number;
   user_id: string;
   product_id: string;
@@ -25,7 +18,7 @@ interface CartItem {
 }
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItemData[]>([]);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -47,11 +40,9 @@ const CartPage = () => {
     fetchCartItems();
   }, []);
 
-  const combineCartItems = (items: CartItem[]): CartItem[] => {
-    const combinedItems = items.reduce((acc: CartItem[], item: CartItem) => {
-      const existingItem = acc.find(
-        (accItem) => accItem.product_id === item.product_id
-      );
+  const combineCartItems = (items: CartItemData[]): CartItemData[] => {
+    const combinedItems = items.reduce((acc: CartItemData[], item: CartItemData) => {
+      const existingItem = acc.find((accItem) => accItem.product_id === item.product_id);
       if (existingItem) {
         existingItem.quantity += item.quantity;
       } else {
@@ -65,9 +56,9 @@ const CartPage = () => {
 
   const getImageUrl = (image: Iimg | Iimg[]) => {
     if (Array.isArray(image)) {
-      return urlForImage(image[0]); // Return the URL for the first image if it's an array
+      return urlForImage(image[0]);
     }
-    return urlForImage(image); // Return the URL for a single image
+    return urlForImage(image);
   };
 
   return (
@@ -76,41 +67,22 @@ const CartPage = () => {
       {cartItems.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center items-center m-7 mr-2 pl-3 sm:pl-0 gap-3">
+        <ul className="space-y-4">
           {cartItems.map((item) => (
-            <Card
+            <CartItem
               key={item.id}
-              className="flex transition-all duration-100 hover:drop-shadow-primary drop-shadow-md hover:shadow-primary justify-center flex-col items-center p-4 gap-3 text-2xl "
-            >
-              <CardHeader className="flex flex-col items-center">
-                <CardTitle className="font-bold text-primary font-sans normal-case text-3xl tracking-wide text-center">
-                  {item.title}
-                </CardTitle>
-                <CardDescription className="mt-2 text-center">
-                  {item.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col items-center">
-                <Image
-                  src={getImageUrl(item.image)}
-                  alt="product"
-                  width={180}
-                  height={180}
-                  className="rounded-lg hover:scale-[1.02] hover:shadow-lg duration-300 transition-all hover:shadow-primary aspect-square filter grayscale hover:grayscale-0"
-                />
-                <p className="mt-4 text-center font-bold">
-                  Price: ${item.price}
-                </p>
-                <p className="text-center font-bold">
-                  Quantity: {item.quantity}
-                </p>
-                <p className="text-center font-bold">
-                  Category: {item.category}
-                </p>
-              </CardContent>
-            </Card>
+              id={item.id}
+              user_id={item.user_id}
+              product_id={item.product_id}
+              title={item.title}
+              description={item.description}
+              image={getImageUrl(item.image)}
+              price={item.price}
+              quantity={item.quantity}
+              category={item.category}
+            />
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

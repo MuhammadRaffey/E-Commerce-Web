@@ -65,15 +65,17 @@ export const GET = async (request: NextRequest) => {
   }
 };
 
-export const POST = async (request: Request) => {
-  const req = await request.json();
-  const user_id = cookies().get("user_id")?.value || uuid();
-
-  if (!cookies().get("user_id")?.value) {
-    cookies().set("user_id", user_id);
-  }
-
+export const POST = async (request: NextRequest) => {
   try {
+    const req = await request.json();
+    const cookieStore = cookies();
+    let user_id = cookieStore.get("user_id")?.value;
+
+    if (!user_id) {
+      user_id = uuid();
+      cookieStore.set("user_id", user_id);
+    }
+
     // Check if the product is already in the cart
     const existingItems = await db
       .select()
@@ -92,7 +94,7 @@ export const POST = async (request: Request) => {
       // If it exists, update the quantity
       res = await db
         .update(cartTable)
-        .set({ quantity: existingItem.quantity + req.quantity })
+        .set({ quantity: existingItem.quantity + (req.quantity || 1) })
         .where(
           and(
             eq(cartTable.user_id, user_id),
@@ -113,7 +115,10 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json({ res });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Something went wrong" });
+    console.error("Error adding item to cart:", error);
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
   }
 };
