@@ -46,7 +46,7 @@ const CartItem = ({ id, user_id, product_id, title, description, image, price, q
 
                 </dl>
             </div>
-            <div className="flex flex-1 items-center justify-end gap-2">
+            <div className="flex flex-col sm:flex-row items-center justify-end gap-2">
 
                 <p className="h-8 w-12 flex items-center justify-center rounded border border-primary text-center text-xs font-bold">
                     {quantity}
