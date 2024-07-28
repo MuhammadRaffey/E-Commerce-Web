@@ -11,8 +11,8 @@ const Footer = () => {
       viewport={{ once: true }}
       className="overflow-x-hidden"
     >
-      <footer className="footer mt-50 text-base-content p-10 grid grid-cols-2 gap-8 md:grid-cols-3">
-        <div>
+      <footer className="footer mt-50 text-base-content p-10 flex justify-between ">
+        <div className="ml-10">
           <h6 className="footer-title">Services</h6>
           <a className="link link-hover">Branding</a>
           <a className="link link-hover">Design</a>
@@ -27,7 +27,7 @@ const Footer = () => {
           <a className="link link-hover">Press kit</a>
         </div>
         <div>
-          <h6 className="footer-title">Social</h6>
+          <h6 className="footer-title ml-1">Social</h6>
           <div className="flex gap-4 text-2xl">
             <a href="#" className="link link-hover">
               <FiGithub />
