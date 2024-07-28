@@ -9,7 +9,6 @@ E-com Store is a modern e-commerce website built with Next.js and Sanity.io. The
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Folder Structure](#folder-structure)
 - [Contributing](#contributing)
 
 ## Features
@@ -65,21 +64,6 @@ E-com Store is a modern e-commerce website built with Next.js and Sanity.io. The
    ```
 
    Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Folder Structure
-
-ecom-store/
-├── public/ # Public assets
-├── src/
-│ ├── components/ # React components
-│ ├── pages/ # Next.js pages
-│ ├── styles/ # Stylesheets
-│ └── utils/ # Utility functions
-├── sanity/ # Sanity studio configuration
-├── .env.local # Environment variables
-├── next.config.mjs # Next.js configuration
-├── package.json # Project metadata and dependencies
-└── README.md # Project documentation
 
 ## Contributing
 
