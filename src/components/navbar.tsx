@@ -5,10 +5,11 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiShoppingCart, FiSearch } from "react-icons/fi";
 import { useRouter } from "next/navigation";
-import { useCart } from "../context/CartContext"; // Import the CartContext
+import { useCart } from "../context/CartContext";
 import Theme from "./Theme";
 import { usePathname } from "next/navigation";
-
+import { IoIosMale, IoIosFemale } from "react-icons/io";
+import { MdChildCare } from "react-icons/md";
 
 const NavBar: React.FC = () => {
   const pathname = usePathname();
@@ -116,6 +117,7 @@ const NavBar: React.FC = () => {
                 href="/men"
                 className="flex items-center hover:underline underline-offset-4 py-2 px-3 rounded linkStyle"
               >
+                <IoIosMale className="mr-2 text-accent-500" />
                 Men
               </Link>
             </li>
@@ -124,6 +126,7 @@ const NavBar: React.FC = () => {
                 href="/women"
                 className="flex items-center hover:underline underline-offset-4 py-2 px-3 rounded linkStyle"
               >
+                <IoIosFemale className="mr-2 " />
                 Women
               </Link>
             </li>
@@ -132,6 +135,7 @@ const NavBar: React.FC = () => {
                 href="/children"
                 className="flex items-center hover:underline underline-offset-4 py-2 px-3 rounded linkStyle"
               >
+                <MdChildCare className="mr-2 " />
                 Children
               </Link>
             </li>

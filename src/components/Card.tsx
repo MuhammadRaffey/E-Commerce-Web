@@ -41,7 +41,7 @@ const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-16 px-7 lg:px-56 py-16">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-5 px-7 lg:px-40 py-16">
       {products.map((item) => (
         <Card
           key={item._id}
