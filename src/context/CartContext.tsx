@@ -5,7 +5,6 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { Image as iImg } from "sanity";
 
-// Add category to the CartItem interface
 interface CartItem {
   title: string;
   id: number;
@@ -15,13 +14,14 @@ interface CartItem {
   image: iImg | iImg[];
   price: number;
   quantity: number;
-  category: string; // New property added
+  category: string;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
   cartCount: number;
   addToCart: (id: string) => Promise<void>;
+  removeFromCart: (id: string) => Promise<void>;
   fetchCartItems: () => Promise<void>;
   updateCartCount: () => void;
 }
@@ -58,27 +58,54 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (response.ok) {
-        // Directly update cart items to provide immediate feedback
+
         setCartItems((prevItems) => {
-          // Check if the item already exists in the cart
+
           const existingItemIndex = prevItems.findIndex(item => item.product_id === id);
           if (existingItemIndex !== -1) {
-            // Item exists, update its quantity
+
             const updatedItems = [...prevItems];
             updatedItems[existingItemIndex].quantity += 1;
             return updatedItems;
           } else {
-            // Item doesn't exist, add a new one
+
             return [...prevItems, { id: Date.now(), user_id: 'user', product_id: id, title: '', description: '', image: [], price: 0, quantity: 1, category: '' }];
           }
         });
-        updateCartCount(); // Update the count immediately
-        await fetchCartItems(); // Fetch updated cart items from server
+        updateCartCount();
+        await fetchCartItems();
       } else {
         console.error("Failed to add item to cart:", response.statusText);
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
+    }
+  };
+
+
+  const removeFromCart = async (id: string) => {
+    try {
+      const data = { product_id: id };
+      const response = await fetch("/api/cart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setCartItems((prevItems) => {
+
+          return prevItems.filter(item => item.product_id !== id);
+        });
+        updateCartCount();
+        console.log("Item removed from cart successfully.");
+      } else {
+        console.error("Failed to remove item from cart:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
     }
   };
 
@@ -97,6 +124,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         cartItems,
         cartCount,
         addToCart,
+        removeFromCart,
         fetchCartItems,
         updateCartCount,
       }}

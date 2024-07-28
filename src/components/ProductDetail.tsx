@@ -8,7 +8,7 @@ import { ChevronLeftIcon, ShoppingCartIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
-import useCart from "@/hooks/useCart";
+import { useCart } from "../context/CartContext";
 
 interface ProductType {
   title: string;
@@ -21,32 +21,14 @@ interface ProductType {
 
 const ProductDetail = ({ product }: { product: ProductType }) => {
   const router = useRouter();
-  // const { fetchCartItems } = useCart();
+  const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<string>("M");
   const [quantity, setQuantity] = useState<number>(1);
 
   const handleAddToCart = async (id: string) => {
     try {
-      const data = {
-        product_id: id,
-        quantity,
-      };
-      const response = await fetch("/api/cart", {
-        method: "POST",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        toast.success("Item added to cart", { icon: "✨" });
-        // const cartItems = await fetchCartItems();
-      } else {
-        console.error("Failed to add item to cart:", response.statusText);
-        toast.error("Failed to add item to cart");
-      }
+      await addToCart(id);
+      toast.success("Item added to cart", { icon: "✨" });
     } catch (error) {
       console.error("Error adding item to cart:", error);
       toast.error("Error adding item to cart");

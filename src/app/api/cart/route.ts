@@ -122,3 +122,50 @@ export const POST = async (request: NextRequest) => {
     );
   }
 };
+
+// DELETE route to remove an item from the cart
+export const DELETE = async (request: NextRequest) => {
+  try {
+    // Parse request JSON to get the product_id
+    const req = await request.json();
+    const cookieStore = cookies();
+    const user_id = cookieStore.get("user_id")?.value;
+
+    if (!user_id || !req.product_id) {
+      return NextResponse.json(
+        { message: "User ID or Product ID is missing" },
+        { status: 400 }
+      );
+    }
+
+    // Perform the delete operation
+    const deletedItems = await db
+      .delete(cartTable)
+      .where(
+        and(
+          eq(cartTable.user_id, user_id),
+          eq(cartTable.product_id, req.product_id)
+        )
+      )
+      .returning(); // Return deleted items
+
+    // Check if any item was actually deleted
+    if (deletedItems.length === 0) {
+      return NextResponse.json(
+        { message: "Item not found in the cart" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      message: "Item deleted successfully",
+      deletedItems, // Return the deleted item details
+    });
+  } catch (error) {
+    console.error("Error deleting item from cart:", error);
+    return NextResponse.json(
+      { message: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+};

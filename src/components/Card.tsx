@@ -11,7 +11,7 @@ import Image from "next/image";
 import { urlForImage } from "../../sanity/lib/image";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-import { useCart } from "../context/CartContext"; // Use the CartContext hook
+import { useCart } from "../context/CartContext";
 import { Image as iImg } from "sanity";
 
 interface ProductType {
@@ -28,7 +28,7 @@ interface CardComponentProps {
 }
 
 const CardComponent: React.FC<CardComponentProps> = ({ products }) => {
-  const { addToCart } = useCart(); // Use addToCart from the context
+  const { addToCart } = useCart();
 
   const handleAddToCart = async (id: string) => {
     try {

@@ -1,5 +1,7 @@
+import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { useCart } from '../context/CartContext';
 
 interface CartItemProps {
     id: number;
@@ -15,26 +17,35 @@ interface CartItemProps {
 
 const CartItem = ({ id, user_id, product_id, title, description, image, price, quantity: initialQuantity, category }: CartItemProps) => {
     const [quantity, setQuantity] = useState(initialQuantity);
+    const { removeFromCart } = useCart();
 
     const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuantity(Number(event.target.value));
     };
 
+    const handleRemoveClick = async () => {
+        try {
+            await removeFromCart(product_id);
+        } catch (error) {
+            console.error('Failed to remove item:', error);
+        }
+    };
+
     return (
-        <li className="flex items-center gap-4">
+        <li className="flex items-center gap-4 border-2 border-primary p-2 rounded-lg">
             <Image src={image} alt={title} className="rounded object-cover" width={130} height={100} />
             <div>
-                <h3 className="text-sm">{title}</h3>
-                <p className="text-xs">{description}</p>
-                <p className="text-xs">{category}</p>
+                <h3 className="text-sm font-bold">{title}</h3>
+                <p className="text-xs font-bold">{description}</p>
+                <p className="text-xs font-bold">{category}</p>
                 <dl className="mt-0.5 space-y-px text-[10px]">
                     <div>
-                        <dt className="inline">Price:</dt>
-                        <dd className="inline">${price}</dd>
+                        <dt className="inline font-bold">Price:</dt>
+                        <dd className="inline font-bold">${price}</dd>
                     </div>
                     <div>
-                        <dt className="inline">Quantity:</dt>
-                        <dd className="inline">{quantity}</dd>
+                        <dt className="inline font-bold">Quantity:</dt>
+                        <dd className="inline font-bold">{quantity}</dd>
                     </div>
                 </dl>
             </div>
@@ -50,9 +61,9 @@ const CartItem = ({ id, user_id, product_id, title, description, image, price, q
                         className="h-8 w-12 rounded border border-primary p-0 text-center text-xs [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                     />
                 </form>
-                <button className="transition hover:text-red-600">
+                <button onClick={handleRemoveClick} className="transition hover:text-red-600">
                     <span className="sr-only">Remove item</span>
-                    Remove
+                    <Trash2 />
                 </button>
             </div>
         </li>

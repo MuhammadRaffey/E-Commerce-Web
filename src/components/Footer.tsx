@@ -12,7 +12,7 @@ const Footer = () => {
       className="overflow-x-hidden"
     >
       <footer className="footer mt-50 text-base-content p-10 flex justify-between ">
-        <div className="ml-10">
+        <div className=" md:ml-10">
           <h6 className="footer-title">Services</h6>
           <a className="link link-hover">Branding</a>
           <a className="link link-hover">Design</a>
