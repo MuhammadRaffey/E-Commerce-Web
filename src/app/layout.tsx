@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import NavBar from "@/components/navbar";
 import Footer from "@/components/Footer";
+import { CartProvider } from "../context/CartContext";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,10 +30,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
           "min-h-screen  bg-background font-sans antialiased ",
           fontSans.variable
         )}
-      >
-        <NavBar />
-        {children}
-        <Footer />
+      ><CartProvider>
+          <NavBar />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

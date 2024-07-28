@@ -1,9 +1,12 @@
+// src/app/cart/page.tsx
+
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image as Iimg } from "sanity";
 import { urlForImage } from "../../../sanity/lib/image";
 import CartItem from "@/components/Cart";
+import { useCart } from "../../context/CartContext"; // Import the context
 
 interface CartItemData {
   id: number;
@@ -18,28 +21,15 @@ interface CartItemData {
 }
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState<CartItemData[]>([]);
+  // Access cart items and fetchCartItems method from context
+  const { cartItems, fetchCartItems } = useCart();
 
+  // Fetch cart items using context on component mount
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await fetch("/api/cart", { cache: "no-cache" });
-        const data = await response.json();
-
-        if (response.ok && data.cartItems) {
-          const uniqueCartItems = combineCartItems(data.cartItems);
-          setCartItems(uniqueCartItems);
-        } else {
-          console.error("Failed to fetch cart items:", data.message);
-        }
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
-      }
-    };
-
     fetchCartItems();
-  }, []);
+  }, [fetchCartItems]);
 
+  // Combine cart items with the same product ID
   const combineCartItems = (items: CartItemData[]): CartItemData[] => {
     const combinedItems = items.reduce((acc: CartItemData[], item: CartItemData) => {
       const existingItem = acc.find((accItem) => accItem.product_id === item.product_id);
@@ -54,6 +44,7 @@ const CartPage = () => {
     return combinedItems;
   };
 
+  // Generate URL for images
   const getImageUrl = (image: Iimg | Iimg[]) => {
     if (Array.isArray(image)) {
       return urlForImage(image[0]);
@@ -68,7 +59,7 @@ const CartPage = () => {
         <p>Your cart is empty.</p>
       ) : (
         <ul className="space-y-4">
-          {cartItems.map((item) => (
+          {combineCartItems(cartItems).map((item) => (  // Use combineCartItems with cartItems from context
             <CartItem
               key={item.id}
               id={item.id}

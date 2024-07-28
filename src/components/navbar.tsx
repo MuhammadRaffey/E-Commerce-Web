@@ -1,31 +1,39 @@
 "use client";
+
 // src/components/NavBar.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiShoppingCart, FiSearch } from "react-icons/fi";
 import { useRouter } from "next/navigation";
-import useCart from "../hooks/useCart";
+import { useCart } from "../context/CartContext"; // Import the CartContext
 import Theme from "./Theme";
 import { usePathname } from "next/navigation";
+
 
 const NavBar: React.FC = () => {
   const pathname = usePathname();
   const isSanityStudio = pathname.startsWith("/studio");
   const [isOpen, setIsOpen] = useState(false);
   const Router = useRouter();
-  const { cartCount } = useCart();
+  const { cartCount, fetchCartItems } = useCart();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    fetchCartItems();
+  }, [fetchCartItems]);
 
   if (isSanityStudio) {
     return <div></div>;
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-primary
-    dark:border-white/50 shadow-md text-[14pt] px-9 bg-base-100">
+    <nav
+      className="sticky top-0 z-50 border-b border-primary
+    dark:border-white/50 shadow-md text-[14pt] px-9 bg-base-100"
+    >
       <div className="flex flex-wrap items-center justify-between mx-auto">
         <div className="flex flex-row items-center">
           <FiShoppingCart className="h-10 w-10 text-accent-500 mt-1 mx-5" />
@@ -36,16 +44,22 @@ const NavBar: React.FC = () => {
         <div className="flex md:order-2 items-center w-full md:w-auto">
           <div className="hidden md:block">
             <label className="input input-bordered rounded-xl dark:border-[2px] input-primary mr-5 shadow-primary h-12 flex items-center gap-2">
-              <input type="text" className="grow" placeholder="Search the store" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Search the store"
+              />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
-                className="h-4 w-4 opacity-70">
+                className="h-4 w-4 opacity-70"
+              >
                 <path
                   fillRule="evenodd"
                   d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clipRule="evenodd" />
+                  clipRule="evenodd"
+                />
               </svg>
             </label>
           </div>
@@ -97,7 +111,6 @@ const NavBar: React.FC = () => {
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 mt-2 rounded-lg md:space-x-8 md:flex-row">
-
             <li>
               <Link
                 href="/men"
