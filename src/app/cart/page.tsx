@@ -44,6 +44,11 @@ const CartPage = () => {
     return combinedItems;
   };
 
+  // Calculate the total price of all cart items
+  const calculateTotalAmount = (items: CartItemData[]): number => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
   // Generate URL for images
   const getImageUrl = (image: Iimg | Iimg[]) => {
     if (Array.isArray(image)) {
@@ -52,6 +57,12 @@ const CartPage = () => {
     return urlForImage(image);
   };
 
+  // Get the combined cart items
+  const combinedCartItems = combineCartItems(cartItems);
+
+  // Calculate the total amount
+  const totalAmount = calculateTotalAmount(combinedCartItems);
+
   return (
     <div className="flex flex-col items-center justify-center mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Your Cart</h1>
@@ -59,7 +70,7 @@ const CartPage = () => {
         <p>Your cart is empty.</p>
       ) : (
         <ul className="space-y-4">
-          {combineCartItems(cartItems).map((item) => (  // Use combineCartItems with cartItems from context
+          {combinedCartItems.map((item) => (  // Use combinedCartItems with cartItems from context
             <CartItem
               key={item.id}
               id={item.id}
@@ -74,6 +85,11 @@ const CartPage = () => {
             />
           ))}
         </ul>
+      )}
+      {cartItems.length > 0 && (  // Display total only if there are items in the cart
+        <div className="mt-6 p-4  rounded shadow-sm">
+          <h2 className="text-2xl font-semibold text-center">Total: ${totalAmount.toFixed(2)}</h2>
+        </div>
       )}
     </div>
   );
