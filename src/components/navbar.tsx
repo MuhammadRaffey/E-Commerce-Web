@@ -64,7 +64,7 @@ const NavBar: React.FC = () => {
                 </li>
                 <li>
                   <Link
-                    href="/kids"
+                    href="/children"
                     className="flex items-center hoverani  py-2 px-3 rounded linkStyle"
                   >
                     <MdChildCare className="mr-2" />
@@ -154,7 +154,7 @@ const NavBar: React.FC = () => {
               Women
             </Link>
             <Link
-              href="/kids"
+              href="/children"
               className="flex items-center    transition   py-2 px-3 rounded linkStyle"
             >
               <MdChildCare className="mr-2" />
