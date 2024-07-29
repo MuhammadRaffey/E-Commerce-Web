@@ -1,6 +1,5 @@
 "use client";
 
-// src/components/NavBar.tsx
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { FiShoppingCart, FiSearch } from "react-icons/fi";
@@ -31,117 +30,158 @@ const NavBar: React.FC = () => {
   }
 
   return (
-    <nav
-      className="sticky top-0 z-50 border-b border-primary
-    dark:border-white/50 shadow-md text-[14pt] px-9 bg-base-100"
-    >
-      <div className="flex flex-wrap items-center justify-between mx-auto">
-        <div className="flex flex-row items-center">
-          <FiShoppingCart className="h-10 w-10 text-accent-500 mt-1 mx-5" />
-          <span className="text-[28pt] font-[FoundersGrotesk-Semibold] whitespace-nowrap mt-1">
-            <Link href="/">Raffey Store</Link>
-          </span>
-        </div>
-        <div className="flex md:order-2 items-center w-full md:w-auto">
+    <nav className="items-center maxw-screen-sm h-[4rem] sticky top-0 z-50 shadow-md border-b border-primary dark:border-white/50 bg-mysecondary ">
+      <div className="mx-auto max-w-screen px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          <div className="flex md:flex md:items-center md:gap-12">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="sr-only">Home</span>
+              <span className="text-[25pt] font-[FoundersGrotesk-Semibold] font-bold whitespace-nowrap">
+                TheRaffeyStore.
+              </span>
+            </Link>
+          </div>
           <div className="hidden md:block">
-            <label className="input input-bordered rounded-xl dark:border-[2px] input-primary mr-5 shadow-primary h-12 flex items-center gap-2">
-              <input
-                type="text"
-                className="grow"
-                placeholder="Search the store"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="h-4 w-4 opacity-70"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clipRule="evenodd"
+            <nav aria-label="Global">
+              <ul className="flex font-semibold items-center mt-2 gap-5 text-xl">
+                <li>
+                  <Link
+                    href="/men"
+                    className="flex items-center transition py-2 hoverani px-3 rounded linkStyle"
+                  >
+                    <IoIosMale className="mr-2 text-accent-500" />
+                    Men
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/women"
+                    className="flex items-center hoverani  transition py-2 px-3 rounded linkStyle"
+                  >
+                    <IoIosFemale className="mr-2" />
+                    Women
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/kids"
+                    className="flex items-center hoverani  py-2 px-3 rounded linkStyle"
+                  >
+                    <MdChildCare className="mr-2" />
+                    Kids
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center space-x-2">
+              <label className="input input-bordered rounded-xl dark:border-[2px] input-primary mr-3 shadow-primary h-9 flex items-center gap-2">
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="Search here."
                 />
-              </svg>
-            </label>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  className="h-4 w-4 opacity-70"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </label>
+              <button
+                onClick={() => Router.push("/cart")}
+                className="relative p-2"
+              >
+                <FiShoppingCart className="w-7 h-7 mt-1" />
+                {cartCount > 0 && (
+                  <span className="absolute top-0 right-0 inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+              <Theme />
+            </div>
+            <div className="block mb-2 md:hidden">
+              <Theme /></div>
+            <div className="block md:hidden">
+              <button
+                onClick={toggleMenu}
+                className="mr-2 shadow-primary flex-col flex bg-primary rounded p-2 scale-110 text-white"
+              >
+                <span className="sr-only">Toggle menu</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
-          <div className="block md:hidden cursor-pointer">
-            <FiSearch className="w-6 h-6 mt-3 mx-4" />
-          </div>
-          <div
-            className="relative cursor-pointer"
-            onClick={() => Router.push("/cart")}
-          >
-            <div className="flex items-center">
-              <FiShoppingCart className="w-6 h-6 mt-3 mx-4" />
+        </div>
+
+      </div>
+      {isOpen && (
+        <div className="md:hidden ">
+          <div className="space-y-1 text-xl bg-mysecondary font-semibold flex flex-col items-center p-2">
+            <Link
+              href="/men"
+              className="flex items-center transition py-2 px-3 rounded linkStyle"
+            >
+              <IoIosMale className="mr-2 text-accent-500" />
+              Men
+            </Link>
+            <Link
+              href="/women"
+              className="flex items-center    transition   py-2 px-3 rounded linkStyle"
+            >
+              <IoIosFemale className="mr-2" />
+              Women
+            </Link>
+            <Link
+              href="/kids"
+              className="flex items-center    transition   py-2 px-3 rounded linkStyle"
+            >
+              <MdChildCare className="mr-2" />
+              Kids
+            </Link>
+            <Link
+              href="/"
+              className="   transition   py-2 px-3 rounded linkStyle flex items-center"
+            >
+              <FiSearch className="mr-2" />
+              Search
+            </Link>
+            <Link
+              href="/cart"
+              className="   transition   py-2 px-3 rounded linkStyle flex items-center"
+            >
+              <FiShoppingCart className="mr-2" />
+              Cart
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+                <span className="ml-2 inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs">
                   {cartCount}
                 </span>
               )}
-            </div>
+            </Link>
           </div>
-          <Theme />
-          <button
-            onClick={toggleMenu}
-            type="button"
-            className="inline-flex items-center p-2 w-9 h-9 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 mt-0 sm:mt-6"
-            aria-controls="navbar-sticky"
-            aria-expanded={isOpen}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-5 text-primary h-5 mt-2 sm:mt-0"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 17 14"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M1 1h15M1 7h15M1 13h15"
-              />
-            </svg>
-          </button>
         </div>
-        <div
-          className={`items-center justify-between ${isOpen ? "block" : "hidden"
-            } w-full md:flex md:w-auto md:order-1`}
-          id="navbar-sticky"
-        >
-          <ul className="flex flex-col p-4 mt-2 rounded-lg md:space-x-8 md:flex-row">
-            <li>
-              <Link
-                href="/men"
-                className="flex items-center hover:underline underline-offset-4 py-2 px-3 rounded linkStyle"
-              >
-                <IoIosMale className="mr-2 text-accent-500" />
-                Men
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/women"
-                className="flex items-center hover:underline underline-offset-4 py-2 px-3 rounded linkStyle"
-              >
-                <IoIosFemale className="mr-2 " />
-                Women
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/children"
-                className="flex items-center hover:underline underline-offset-4 py-2 px-3 rounded linkStyle"
-              >
-                <MdChildCare className="mr-2 " />
-                Children
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+      )}
     </nav>
   );
 };

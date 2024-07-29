@@ -7,7 +7,7 @@ const Theme = () => {
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
-      isDarkMode ? "black" : "lofi"
+      isDarkMode ? "forest" : "cmyk"
     );
   }, [isDarkMode]);
 
@@ -21,7 +21,7 @@ const Theme = () => {
         <input type="checkbox" checked={!isDarkMode} onChange={toggleTheme} />
 
         <svg
-          className="swap-on h-8 w-10 fill-current mt-5"
+          className="swap-on h-8 mb-2 w-9 fill-current mt-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >

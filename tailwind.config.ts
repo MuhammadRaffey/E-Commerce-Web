@@ -2,6 +2,11 @@ import type { Config } from "tailwindcss";
 import daisyui from "daisyui";
 import { fontFamily } from "tailwindcss/defaultTheme"; // Importing default font family for extension
 
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
 const config: Config = {
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -9,6 +14,7 @@ const config: Config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  darkMode: "class",
   daisyui: {
     themes: [
       {
@@ -61,6 +67,10 @@ const config: Config = {
   prefix: "",
   theme: {
     extend: {
+      colors: {
+        myprimary: "var(--primary-color)",
+        mysecondary: "var(--secondary-color)",
+      },
       screens: {
         "2xl": "1400px",
       },
@@ -83,7 +93,18 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), daisyui],
+  plugins: [require("tailwindcss-animate"), daisyui, addVariablesForColors],
 };
+
+function addVariablesForColors({ addBase, theme }: any) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ":root": newVars,
+  });
+}
 
 export default config;

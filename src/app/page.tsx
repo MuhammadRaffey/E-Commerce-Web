@@ -4,8 +4,6 @@ import Home from "../components/Home";
 
 
 const Main = async () => {
-
-
   return (
     <>
       <Toaster
@@ -14,7 +12,6 @@ const Main = async () => {
           style: { backgroundColor: "black", color: "white" },
         }}
       />
-
       <Home />
     </>
   );
