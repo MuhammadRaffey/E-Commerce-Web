@@ -37,7 +37,7 @@ const NavBar: React.FC = () => {
             <Link href="/" className="flex items-center gap-2">
               <span className="sr-only">Home</span>
               <span className="text-[25pt] font-[FoundersGrotesk-Semibold] font-bold whitespace-nowrap">
-                TheRaffeyStore.
+                Streetwear
               </span>
             </Link>
           </div>
@@ -110,10 +110,21 @@ const NavBar: React.FC = () => {
             </div>
             <div className="block mb-2 md:hidden">
               <Theme /></div>
-            <div className="block md:hidden">
+            <div className=" md:hidden flex items-center">
+              <button
+                onClick={() => Router.push("/cart")}
+                className="relative p-2 mr-2 shadow-primary flex items-center justify-center"
+              >
+                <FiShoppingCart className="w-7 h-7" />
+                {cartCount > 0 && (
+                  <span className="absolute top-0 right-0 inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
               <button
                 onClick={toggleMenu}
-                className="mr-2 shadow-primary flex-col flex bg-primary rounded p-2 scale-110 text-white"
+                className="shadow-primary flex-col flex bg-primary rounded p-2 scale-110 text-white"
               >
                 <span className="sr-only">Toggle menu</span>
                 <svg
@@ -167,18 +178,7 @@ const NavBar: React.FC = () => {
               <FiSearch className="mr-2" />
               Search
             </Link>
-            <Link
-              href="/cart"
-              className="   transition   py-2 px-3 rounded linkStyle flex items-center"
-            >
-              <FiShoppingCart className="mr-2" />
-              Cart
-              {cartCount > 0 && (
-                <span className="ml-2 inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
+
           </div>
         </div>
       )}
