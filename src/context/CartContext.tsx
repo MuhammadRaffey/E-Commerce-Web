@@ -1,8 +1,12 @@
-// src/context/CartContext.tsx
-
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import { Image as iImg } from "sanity";
 
 interface CartItem {
@@ -20,7 +24,7 @@ interface CartItem {
 interface CartContextType {
   cartItems: CartItem[];
   cartCount: number;
-  addToCart: (id: string) => Promise<void>;
+  addToCart: (id: string, quantity?: number) => Promise<void>;
   removeFromCart: (id: string) => Promise<void>;
   fetchCartItems: () => Promise<void>;
   updateCartCount: () => void;
@@ -28,7 +32,9 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartCount, setCartCount] = useState<number>(0);
 
@@ -39,16 +45,21 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (response.ok && data.cartItems) {
         setCartItems(data.cartItems);
-        setCartCount(data.cartItems.reduce((count: number, item: CartItem) => count + item.quantity, 0));
+        setCartCount(
+          data.cartItems.reduce(
+            (count: number, item: CartItem) => count + item.quantity,
+            0
+          )
+        );
       }
     } catch (error) {
       console.error("Error fetching cart items:", error);
     }
   }, []);
 
-  const addToCart = async (id: string) => {
+  const addToCart = async (id: string, quantity: number = 1) => {
     try {
-      const data = { product_id: id };
+      const data = { product_id: id, quantity };
       const response = await fetch("/api/cart", {
         method: "POST",
         headers: {
@@ -58,18 +69,29 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (response.ok) {
-
         setCartItems((prevItems) => {
-
-          const existingItemIndex = prevItems.findIndex(item => item.product_id === id);
+          const existingItemIndex = prevItems.findIndex(
+            (item) => item.product_id === id
+          );
           if (existingItemIndex !== -1) {
-
             const updatedItems = [...prevItems];
-            updatedItems[existingItemIndex].quantity += 1;
+            updatedItems[existingItemIndex].quantity += quantity;
             return updatedItems;
           } else {
-
-            return [...prevItems, { id: Date.now(), user_id: 'user', product_id: id, title: '', description: '', image: [], price: 0, quantity: 1, category: '' }];
+            return [
+              ...prevItems,
+              {
+                id: Date.now(),
+                user_id: "user",
+                product_id: id,
+                title: "",
+                description: "",
+                image: [],
+                price: 0,
+                quantity,
+                category: "",
+              },
+            ];
           }
         });
         updateCartCount();
@@ -81,7 +103,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error("Error adding item to cart:", error);
     }
   };
-
 
   const removeFromCart = async (id: string) => {
     try {
@@ -96,8 +117,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (response.ok) {
         setCartItems((prevItems) => {
-
-          return prevItems.filter(item => item.product_id !== id);
+          return prevItems.filter((item) => item.product_id !== id);
         });
         updateCartCount();
         console.log("Item removed from cart successfully.");
@@ -110,7 +130,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateCartCount = useCallback(() => {
-    const count = cartItems.reduce((acc: number, item: CartItem) => acc + item.quantity, 0);
+    const count = cartItems.reduce(
+      (acc: number, item: CartItem) => acc + item.quantity,
+      0
+    );
     setCartCount(count);
   }, [cartItems]);
 

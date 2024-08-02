@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image as iImg } from "sanity";
 import { urlForImage } from "../../sanity/lib/image";
 import Image from "next/image";
@@ -24,10 +24,15 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
   const { addToCart } = useCart();
   const [selectedSize, setSelectedSize] = useState<string>("M");
   const [quantity, setQuantity] = useState<number>(1);
+  const [totalPrice, setTotalPrice] = useState<number>(product.price);
+
+  useEffect(() => {
+    setTotalPrice(product.price * quantity);
+  }, [quantity, product.price]);
 
   const handleAddToCart = async (id: string) => {
     try {
-      await addToCart(id);
+      await addToCart(id, quantity);
       toast.success("Item added to cart", { icon: "✨" });
     } catch (error) {
       console.error("Error adding item to cart:", error);
@@ -44,12 +49,12 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
       />
       <button
         onClick={() => router.back()}
-        className="flex items-center  hover:text-secondary transition duration-150 ease-in-out mb-4"
+        className="flex items-center hover:text-secondary transition duration-150 ease-in-out mb-4"
       >
-        <ChevronLeftIcon className="h-5 w-5 mr-1 " />
+        <ChevronLeftIcon className="h-5 w-5 mr-1" />
         <span className="text-lg font-medium">Back</span>
       </button>
-      <h1 className="md:flex  text-3xl md:text-4xl font-extrabold mb-6   justify-center">
+      <h1 className="md:flex text-3xl md:text-4xl font-extrabold mb-6 justify-center">
         {product.title}
       </h1>
       <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-6">
@@ -74,11 +79,9 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
           />
         )}
         <div className="mt-4 md:mt-0 md:ml-6 flex flex-col w-full md:w-auto">
-          <p className="text-lg font-bold  mb-4">
-            {product.description}
-          </p>
-          <p className="text-2xl font-bold  mb-4">
-            Price: ${product.price}
+          <p className="text-lg font-bold mb-4">{product.description}</p>
+          <p className="text-2xl font-bold mb-4">
+            Price: ${totalPrice.toFixed(2)}
           </p>
           <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 mb-4">
             <div className="flex space-x-2">
@@ -86,8 +89,9 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`btn btn-outline btn-md rounded-lg ${selectedSize === size ? "bg-blue-400" : ""
-                    }`}
+                  className={`btn btn-outline btn-md rounded-lg ${
+                    selectedSize === size ? "bg-blue-400" : ""
+                  }`}
                 >
                   {size}
                 </button>
@@ -110,7 +114,7 @@ const ProductDetail = ({ product }: { product: ProductType }) => {
             </div>
           </div>
           <button
-            className="btn  mt-4 transition-all duration-200 hover:scale-105 hover:btn-primary btn-outline btn-md rounded-lg"
+            className="btn mt-4 transition-all duration-200 hover:scale-105 hover:btn-primary btn-outline btn-md rounded-lg"
             onClick={() => handleAddToCart(product._id)}
           >
             <ShoppingCartIcon className="h-5 w-5 mr-1" />
